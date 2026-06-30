@@ -104,7 +104,14 @@ textarea:focus-visible,button:focus-visible{
   padding:.32rem .6rem;border-radius:100px;transition:background .15s ease,color .15s ease;
 }
 .lang-toggle button.on{background:var(--violet);color:#fff}
-@media(max-width:520px){.lang-toggle{display:none}}
+/* keep the EN/MY toggle available on mobile — tighten the nav so it fits */
+@media(max-width:560px){
+  .wrap{padding:0 16px}
+  nav .btn{padding:.6rem 1rem;font-size:.9rem}
+  .nav-cta{gap:.5rem}
+  .lang-toggle{padding:2px}
+  .lang-toggle button{padding:.3rem .5rem;font-size:.7rem}
+}
 
 /* ---------- nav ---------- */
 nav{position:sticky;top:0;z-index:50;background:rgba(233,231,244,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}

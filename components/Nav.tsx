@@ -15,7 +15,6 @@ export default function Nav() {
           <a href="#how">{t.nav.how}</a>
           <a href="#why">{t.nav.why}</a>
           <a href="#cues">{t.nav.cues}</a>
-          <a href="#pilot">{t.nav.pilot}</a>
         </div>
         <div className="nav-cta">
           <div

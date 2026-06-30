@@ -9,7 +9,6 @@ export const dict = {
       how: "How it works",
       why: "Why tutur",
       cues: "The cues",
-      pilot: "The pilot",
       cta: "Join the pilot",
     },
     hero: {
@@ -166,8 +165,7 @@ export const dict = {
       how: "Cara ia berfungsi",
       why: "Kenapa tutur",
       cues: "Isyarat tutur",
-      pilot: "Program perintis",
-      cta: "Sertai perintis",
+      cta: "Program Perintis",
     },
     hero: {
       eyebrow: "Program perintis — kini dibuka",
@@ -178,7 +176,7 @@ export const dict = {
       statBig: "167 jam",
       statSmall:
         "seminggu di rumah, tempat kata-kata berkembang. Terapi hanya satu.",
-      ctaPrimary: "Sertai perintis",
+      ctaPrimary: "Sertai Program Perintis",
       ctaGhost: "Lihat caranya",
       reassure: [
         "Percuma untuk keluarga perintis",
@@ -259,7 +257,7 @@ export const dict = {
       photoHint: "Potret ibu bapa — mesra, candid, memandang kamera",
     },
     pilot: {
-      eyebrow: "Sertai perintis",
+      eyebrow: "Sertai Program Perintis",
       title: "Jadilah antara keluarga terawal.",
       intro:
         "Kami membuka tutur kepada sekumpulan kecil keluarga Malaysia tahun ini. Tinggalkan maklumat anda dan kami akan hantar jemputan.",
@@ -324,7 +322,7 @@ export const dict = {
     },
     footer: {
       tagline: "Sokongan komunikasi untuk keluarga Malaysia. © 2026 tutur.",
-      links: { how: "Cara ia berfungsi", pilot: "Sertai perintis" },
+      links: { how: "Cara ia berfungsi", pilot: "Sertai Program Perintis" },
     },
   },
 };
