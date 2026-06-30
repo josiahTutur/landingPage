@@ -22,15 +22,32 @@ Requires Node 18.18+ (developed on Node 24).
 3. Framework preset auto-detects **Next.js** — no settings to change.
 4. Deploy.
 
-### Collecting real sign-ups
+### Receiving sign-ups by email
 
-The pilot form validates client-side and shows a success state out of the box. To actually capture submissions, set one environment variable in **Vercel → Settings → Environment Variables**:
+The pilot form posts every field as JSON to whatever endpoint you configure, and a **form-to-email service** turns each submission into an email — no backend or database needed. The form already validates client-side and shows a success state; you just provide the endpoint.
+
+Set these in **Vercel → Settings → Environment Variables** (and locally in `.env.local` to test), then redeploy:
 
 ```
-NEXT_PUBLIC_FORM_ENDPOINT = https://your-form-backend/...
+NEXT_PUBLIC_FORM_ENDPOINT     = <the service's POST URL>
+NEXT_PUBLIC_FORM_ACCESS_KEY   = <only for Web3Forms>
 ```
 
-Point it at a Formspree / Tally / Google Form / custom endpoint that accepts a JSON `POST`. When unset, the form still works visually (no data is sent).
+**Option A — Formspree** (simplest):
+1. Sign up at [formspree.io](https://formspree.io), create a form, choose the email to receive at.
+2. Copy the form's endpoint, e.g. `https://formspree.io/f/abcdwxyz`.
+3. Set `NEXT_PUBLIC_FORM_ENDPOINT` to it. Leave `NEXT_PUBLIC_FORM_ACCESS_KEY` unset.
+4. Redeploy → submissions arrive in your inbox. (Free tier ~50/month.)
+
+**Option B — Web3Forms** (free, no account):
+1. At [web3forms.com](https://web3forms.com), enter your email to get an **Access Key**.
+2. Set `NEXT_PUBLIC_FORM_ENDPOINT = https://api.web3forms.com/submit`
+3. Set `NEXT_PUBLIC_FORM_ACCESS_KEY` to your access key.
+4. Redeploy → submissions arrive in your inbox.
+
+Either way, confirm the service's first verification email and check spam for the first submission. When the endpoint is unset, the form still works visually but sends nothing.
+
+> Want submissions stored in your own database, or a custom "from" address and branded email? That needs a small server route (e.g. a Next.js API route + [Resend](https://resend.com)) instead of a third-party service — ask and it can be added.
 
 ## Bilingual (EN / MY)
 

@@ -3,10 +3,14 @@
 import { useRef, useState } from "react";
 import { useLang } from "./LanguageProvider";
 
-// To collect real sign-ups, set NEXT_PUBLIC_FORM_ENDPOINT in your Vercel
-// environment (e.g. a Formspree / Tally / custom endpoint). When empty, the
-// form still validates and shows the success state so nothing is left hanging.
+// Sign-ups are emailed to you via a form-to-email service — no backend needed.
+// Set these in your Vercel environment (see README "Receiving sign-ups by email"):
+//   NEXT_PUBLIC_FORM_ENDPOINT    the service's POST URL
+//   NEXT_PUBLIC_FORM_ACCESS_KEY  only for Web3Forms (its "access_key")
+// When the endpoint is empty, the form still validates and shows success so a
+// parent is never left hanging.
 const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
+const FORM_ACCESS_KEY = process.env.NEXT_PUBLIC_FORM_ACCESS_KEY ?? "";
 
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -72,8 +76,16 @@ export default function Pilot() {
       try {
         await fetch(FORM_ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            ...data,
+            _subject: "New tutur pilot sign-up",
+            // ignored by services that don't use it (e.g. Formspree)
+            ...(FORM_ACCESS_KEY ? { access_key: FORM_ACCESS_KEY } : {}),
+          }),
         });
       } catch {
         /* still show success so the parent isn't left hanging */
