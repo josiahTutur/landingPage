@@ -1,65 +1,63 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins, Inter, Playfair_Display, Caveat } from "next/font/google";
+import { Poppins, Fraunces, League_Spartan } from "next/font/google";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import "./globals.css";
 
-/* Type roles per Tutur Brand Book v1.0:
-   Poppins — headings / UI · Inter — body · Playfair (italic) — warm moments
-   Caveat — Togetherness sub-brand script only (loaded, used sparingly) */
+/* Type roles per the v2 design:
+   Poppins — body & UI · Fraunces — display headings & warm accents
+   (kept light, not bold) · League Spartan — the phone's "hello!" */
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-poppins",
   display: "swap",
 });
-const inter = Inter({
+const leagueSpartan = League_Spartan({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-spartan",
   display: "swap",
 });
-const playfair = Playfair_Display({
+/* Load Fraunces as a variable font WITH its optical-size + character axes so
+   we can dial in the high-contrast "display" look (opsz) and the signature
+   wonky italic swashes (WONK) — the elegant cut shown on Google Fonts. */
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["600", "700"],
-  style: ["italic", "normal"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-const caveat = Caveat({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-caveat",
+  style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tutur.app"),
-  title: "tutur — Coaching for the other 167 hours",
+  metadataBase: new URL("https://tutur.my"),
+  title: "tutur — Komunikasi bermula dengan anda",
   description:
-    "tutur coaches Malaysian parents to support their child's speech and language at home — in the languages you speak every day. Therapy is one hour a week; tutur helps with the other 167. Join the pilot.",
+    "Tutur sedang membina aplikasi untuk membantu ibu bapa Malaysia menjadi rakan komunikasi anak mereka. Sertai Program Pilot kami.",
   keywords: [
+    "DLD",
+    "developmental language disorder",
     "speech delay",
     "parent coaching",
     "Malaysia",
     "bilingual",
-    "speech therapy",
     "child language",
     "tutur",
   ],
   openGraph: {
-    title: "tutur — Coaching for the other 167 hours",
+    title: "tutur — Komunikasi bermula dengan anda",
     description:
-      "Warm, evidence-backed coaching that helps Malaysian parents support their child's speech at home. Join the pilot.",
-    url: "https://tutur.app",
+      "Dibina untuk membantu ibu bapa Malaysia menjadi rakan komunikasi anak. Sertai Program Pilot kami.",
+    url: "https://tutur.my",
     siteName: "tutur",
-    locale: "en_MY",
+    locale: "ms_MY",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "tutur — Coaching for the other 167 hours",
+    title: "tutur — Komunikasi bermula dengan anda",
     description:
-      "Warm, evidence-backed coaching that helps Malaysian parents support their child's speech at home.",
+      "Dibina untuk membantu ibu bapa Malaysia menjadi rakan komunikasi anak.",
   },
 };
 
@@ -77,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="ms"
-      className={`${poppins.variable} ${inter.variable} ${playfair.variable} ${caveat.variable}`}
+      className={`${poppins.variable} ${fraunces.variable} ${leagueSpartan.variable}`}
     >
       <body>
         <LanguageProvider>{children}</LanguageProvider>

@@ -1,27 +1,25 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import LangTicker from "@/components/LangTicker";
-import ThesisBand from "@/components/ThesisBand";
-import HowItWorks from "@/components/HowItWorks";
-import WhyTutur from "@/components/WhyTutur";
-import CueSystem from "@/components/CueSystem";
-import Testimonial from "@/components/Testimonial";
+import SkillBand from "@/components/SkillBand";
+import CommunityPhoto from "@/components/CommunityPhoto";
+import Togetherness from "@/components/Togetherness";
+import StatBand from "@/components/StatBand";
+import DLDSection from "@/components/DLDSection";
 import Pilot from "@/components/Pilot";
-import Footer from "@/components/Footer";
+import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
     <>
       <Nav />
       <Hero />
-      <LangTicker />
-      <ThesisBand />
-      <HowItWorks />
-      <WhyTutur />
-      <CueSystem />
-      <Testimonial />
+      <SkillBand />
+      <CommunityPhoto />
+      <Togetherness />
+      <StatBand />
+      <DLDSection />
       <Pilot />
-      <Footer />
+      <Contact />
     </>
   );
 }

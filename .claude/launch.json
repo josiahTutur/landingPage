@@ -6,6 +6,15 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "registration",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/josiahsoh/Developer/Tutur/registration && ADMIN_PASSWORD=tutur-dev npm run dev -- -p 3100"
+      ],
+      "port": 3100
     }
   ]
 }

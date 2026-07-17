@@ -1,61 +1,65 @@
 /* =========================================================================
-   tutur — global styles
-   Colour + type tokens are extracted verbatim from Tutur Brand Book v1.0.
+   tutur — global styles (v2 "Komunikasi bermula dengan anda")
+   Colour + type tokens extracted verbatim from Tutur Brand Book v1.0.
    Do NOT introduce colours, fonts, or accents not defined here.
    ========================================================================= */
 
 :root{
-  /* --- Violet (primary) --- */
-  --violet:#6A2FE8;        /* primary brand violet — buttons, links, key accents */
-  --violet-deep:#4E18C4;   /* hover / pressed states, deep fills */
-  --violet-ink:#26155C;    /* darkest violet — text on light violet washes */
-  --violet-light:#8B5CFF;  /* numeric labels, subtle accents, underlines */
-  --violet-wash:#F0EAFE;   /* pale violet pill/tag/chip backgrounds */
+  /* --- Violet (primary) — unified on #8b5cff per brand direction --- */
+  --violet:#8B5CFF;        /* primary purple everywhere */
+  --violet-deep:#7644F0;   /* darker shade for hover/pressed states */
+  --violet-ink:#26155C;    /* deep near-black purple — dark text / dark fills */
+  --violet-light:#8B5CFF;  /* same as primary now */
+  --violet-wash:#F0EAFE;   /* pale chip/tag background */
+  --violet-bg:#8A5CFE;     /* figure colour — used for all purple BACKGROUNDS
+                              (text keeps the primary #8B5CFF via --violet) */
 
-  /* --- Lime (encouragement / success / "wins") --- */
-  --lime:#AEE85A;          /* success bubbles, win moments, accent lines */
-  --lime-deep:#5E8A12;     /* lime text on light backgrounds (contrast-safe) */
+  /* --- Lime (encouragement / accent) --- */
+  --lime:#AEE85A;
+  --lime-deep:#5E8A12;
 
-  /* --- Periwinkle (community / marketing accent) --- */
-  --peri:#6C5CE7;
-
-  /* --- Supporting / status hues (use sparingly) --- */
-  --teal:#1A8A8A;
-  --amber:#C77A1A;
-  --grn:#1B6E2E;
-  --coral:#C04040;         /* errors / "don't" only */
+  /* --- Periwinkle --- */
+  --peri:#8B5CFF;
 
   /* --- Neutrals --- */
-  --ink:#191628;           /* primary text */
-  --slate:#4A4768;         /* secondary text / body muted */
-  --mist:#8B88A8;          /* tertiary text, captions, placeholders */
-  --cloud:#F6F5FB;         /* light surface / card background */
-  --line:#E6E3F2;          /* hairline borders / dividers */
+  --ink:#191628;
+  --slate:#4A4768;
+  --mist:#8B88A8;
+  --cloud:#F6F5FB;
+  --line:#E6E3F2;
   --white:#FFFFFF;
 
-  /* --- Page background (per brand book body) --- */
-  --page-bg:#E9E7F4;
+  /* --- Page background --- */
+  --page-bg:#EFEDF7;
 
   /* --- Signature gradients (from the book) --- */
-  --grad-cover: radial-gradient(120% 90% at 86% -12%, rgba(174,232,90,.17), transparent 55%),
-                radial-gradient(120% 120% at -10% 112%, rgba(139,92,255,.22), transparent 55%),
-                linear-gradient(158deg, #561CD4, #6A2FE8 48%, #7E3DF2);
-  --grad-chip: linear-gradient(135deg, #8B5CFF, #5215C9);
+  /* Flat purple fill matching the figures (backgrounds follow #8A5CFE) */
+  --grad-cover: var(--violet-bg);
 
   /* --- Type roles (CSS vars set by next/font) --- */
+  /* Poppins for headings, body & UI · Fraunces (italic) for warm accents */
   --font-head: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-script: var(--font-caveat), cursive;
+  --font-body: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-display: var(--font-spartan), var(--font-poppins), sans-serif;
 
-  /* --- non-brand utility tokens (layout only) --- */
   --shadow:0 24px 60px -28px rgba(38,21,92,.45);
   --shadow-sm:0 8px 24px -14px rgba(38,21,92,.40);
   --r:22px;
   --maxw:1140px;
+  --content-w:920px;   /* shared width: DLD text + pilot content line up at the left */
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
+/* Fraunces "display" headings & accents — high-contrast optical size + wonky
+   italic swashes, kept light (weight 400) rather than bold. */
+.hero-copy h1,.skill-a,.tg-brand,.accent-serif,.tg-script{
+  font-family:var(--font-serif);
+  font-weight:400;
+  letter-spacing:0;
+  font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 1;
+}
 html{scroll-behavior:smooth}
 body{
   font-family:var(--font-body);
@@ -66,307 +70,321 @@ body{
   overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
+img{max-width:100%}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-
+.wrap.center{text-align:center}
 h1,h2,h3{font-family:var(--font-head);letter-spacing:-.02em}
 
 /* ---------- buttons ---------- */
 .btn{
-  display:inline-flex;align-items:center;gap:.5rem;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   font-family:var(--font-head);font-weight:700;font-size:1rem;white-space:nowrap;
   padding:.85rem 1.5rem;border-radius:100px;border:none;cursor:pointer;
-  background:var(--violet);color:#fff;
+  background:var(--violet-bg);color:#fff;
   transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
   box-shadow:0 10px 24px -12px rgba(106,47,232,.7);
 }
 .btn:hover{background:var(--violet-deep);transform:translateY(-2px)}
 .btn:active{transform:translateY(0)}
-.btn-ghost{
-  background:transparent;color:var(--violet);
-  box-shadow:inset 0 0 0 2px var(--violet-light);
-}
-.btn-ghost:hover{background:var(--violet-wash);color:var(--violet-deep)}
-.btn:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,
-textarea:focus-visible,button:focus-visible{
-  outline:3px solid var(--violet);outline-offset:3px;border-radius:8px;
-}
+.btn-sm{padding:.55rem 1.1rem;font-size:.9rem}
+.btn-lime{background:var(--lime);color:var(--violet-ink);box-shadow:0 10px 24px -14px rgba(174,232,90,.7)}
+.btn-lime:hover{background:#9ed943;color:var(--violet-ink)}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:8px}
 
-/* ---------- logo mark ---------- */
-.mark{height:34px;width:auto;flex:none}
-.screen .mark{height:46px;width:auto;margin-bottom:30px}
+/* ---------- logo ---------- */
 .logo{display:inline-flex;align-items:center}
+/* Nav logo scales with the headline: 60 laptop · 45 tablet · 38 mobile */
+.nav-logo{height:60px;width:auto}
+@media(max-width:1023px){.nav-logo{height:45px}}
+@media(max-width:767px){.nav-logo{height:38px}}
 
 /* ---------- language toggle ---------- */
 .lang-toggle{display:inline-flex;align-items:center;gap:2px;background:var(--white);border:1px solid var(--line);border-radius:100px;padding:3px}
 .lang-toggle button{
   font-family:var(--font-head);font-weight:700;font-size:.72rem;letter-spacing:.04em;
   border:none;background:transparent;color:var(--slate);cursor:pointer;
-  padding:.32rem .6rem;border-radius:100px;transition:background .15s ease,color .15s ease;
+  padding:.32rem .62rem;border-radius:100px;transition:background .15s ease,color .15s ease;
 }
-.lang-toggle button.on{background:var(--violet);color:#fff}
-/* keep the EN/MY toggle available on mobile — tighten the nav so it fits */
-@media(max-width:560px){
-  .wrap{padding:0 16px}
-  nav .btn{padding:.6rem 1rem;font-size:.9rem}
-  .nav-cta{gap:.5rem}
-  .lang-toggle{padding:2px}
-  .lang-toggle button{padding:.3rem .5rem;font-size:.7rem}
-}
+.lang-toggle button.on{background:var(--violet-bg);color:#fff}
+.lang-toggle.on-dark{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);backdrop-filter:blur(6px)}
+.lang-toggle.on-dark button{color:rgba(255,255,255,.85)}
+.lang-toggle.on-dark button.on{background:var(--white);color:var(--violet-ink)}
 
-/* ---------- nav ---------- */
-nav{position:sticky;top:0;z-index:50;background:rgba(233,231,244,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
-.nav-links{display:flex;align-items:center;gap:1.6rem;font-family:var(--font-head);font-weight:600;font-size:.92rem;color:var(--slate)}
-.nav-links a{transition:color .15s ease;white-space:nowrap}
-.nav-links a:hover{color:var(--ink)}
+/* ---------- nav (over hero) ---------- */
+.nav{position:absolute;top:0;left:0;right:0;z-index:50}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:80px}
 .nav-cta{display:flex;align-items:center;gap:.85rem}
-@media(max-width:980px){.nav-links{display:none}}
-
-/* ---------- eyebrow ---------- */
-.eyebrow{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-family:var(--font-head);
-  font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--violet);background:var(--white);border:1px solid var(--line);
-  padding:.4rem .85rem;border-radius:100px;box-shadow:var(--shadow-sm);
-}
-.eyebrow.lime{color:var(--lime-deep)}
-.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(174,232,90,.30)}
 
 /* ---------- hero ---------- */
-.hero{padding:60px 0 84px}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
-h1{
-  font-size:clamp(2.5rem,5.2vw,4rem);font-weight:800;line-height:1.03;
-  letter-spacing:-.03em;margin:1.4rem 0 1.1rem;
-  overflow-wrap:break-word;
+/* The hero follows the VIDEO: full width, 16:9 aspect, so it resizes with the
+   screen exactly as the footage does. Background is the primary purple. */
+.hero{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--violet-bg)}
+.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--violet-bg)}
+/* Native <video> filling the hero. It IS interactive now (controls enabled),
+   so no pointer-events:none here. */
+.hero-video{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
 }
-/* accent wraps with the rest of the headline — keeping it on one line would
-   set the grid column's min-width to the whole phrase and break narrow layouts.
-   inline-block so the underline tracks the text width on its final line. */
-h1 .accent{color:var(--violet);position:relative;display:inline-block}
-h1 .accent svg{position:absolute;left:0;bottom:-.18em;width:100%;height:.32em}
-.hero-copy{min-width:0}
-.lede{font-size:1.18rem;color:var(--slate);max-width:38ch;margin-bottom:1.6rem}
-.lede b{color:var(--ink)}
-.hero-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-.reassure{display:flex;gap:1.1rem;flex-wrap:wrap;margin-top:1.4rem;font-size:.9rem;font-weight:600;color:var(--slate)}
-.reassure span{display:inline-flex;align-items:center;gap:.4rem}
-.reassure svg{width:16px;height:16px;color:var(--violet)}
-
-/* the 167-hours stat line */
-.stat{
-  margin-top:1.7rem;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;
-  font-family:var(--font-head);
+/* scrim keeps the headline readable but must NOT block clicks to the video */
+.hero-scrim{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg, rgba(25,22,40,.36) 0%, rgba(25,22,40,0) 26%,
+             rgba(25,22,40,0) 52%, rgba(38,21,92,.72) 100%);
 }
-.stat .big{font-size:1.55rem;font-weight:800;color:var(--violet);letter-spacing:-.02em}
-.stat small{font-size:.95rem;font-weight:600;color:var(--slate);font-family:var(--font-body)}
-
-/* ---------- phone visual ---------- */
-.stage{position:relative;display:flex;justify-content:center;align-items:center;min-height:520px}
-.phone{
-  position:relative;width:268px;height:540px;border-radius:46px;
-  background:#1c1a22;padding:11px;box-shadow:var(--shadow);z-index:3;
+/* headline: always overlaid at the bottom-left; pointer-events:none so the
+   video underneath stays clickable (pause / scrub / unmute) */
+.hero-copy{position:absolute;left:0;right:0;bottom:0;z-index:1;padding-bottom:clamp(24px,4vw,56px);pointer-events:none}
+.hero-copy h1{
+  color:#fff;font-weight:400;line-height:1.18;
+  font-size:32px;max-width:24ch;
+  text-shadow:0 2px 30px rgba(20,10,50,.45);
 }
-.screen{
-  position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;
-  background:linear-gradient(180deg,#EDE6FB 0%, #DDD0F5 100%);
-  display:flex;flex-direction:column;align-items:center;padding-top:54px;
+.hero-copy h1 .accent{color:var(--violet-light);font-style:italic;font-weight:400}
+/* Headline size per device: 32 laptop · 24 tablet · 20 mobile */
+@media(max-width:1023px){.hero-copy h1{font-size:24px}}
+@media(max-width:767px){.hero-copy h1{font-size:20px}}
+
+/* ---------- custom video controls ---------- */
+/* centred play / pause: always shown when paused; on hover while playing */
+.hero-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:5;width:76px;height:76px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.75);background:rgba(38,21,92,.45);
+  color:#fff;cursor:pointer;display:grid;place-items:center;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  transition:opacity .2s ease,background .2s ease,transform .1s ease;
 }
-.notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:96px;height:24px;background:#1c1a22;border-radius:0 0 16px 16px;z-index:4}
-.screen .mark{width:46px;height:46px;margin-bottom:30px}
-.hello{font-family:var(--font-head);font-size:2.3rem;font-weight:800;color:var(--violet);letter-spacing:-.02em}
-.screen .sub{font-size:.82rem;color:var(--slate);font-weight:600;margin-top:.3rem}
+.hero-play:hover{background:rgba(38,21,92,.72)}
+.hero-play:active{transform:translate(-50%,-50%) scale(.94)}
+.hero-play svg{width:34px;height:34px}
+.hero-play.playing{opacity:0;pointer-events:none}
+.hero:hover .hero-play.playing{opacity:1;pointer-events:auto}
 
-/* speech bubbles inside screen */
-.bubbles{position:absolute;inset:0;pointer-events:none}
-.bubble{
-  position:absolute;font-weight:700;font-size:.9rem;color:var(--ink);
-  background:#fff;padding:.45rem .8rem;border-radius:16px 16px 16px 4px;
-  box-shadow:0 10px 22px -14px rgba(38,21,92,.5);
-  opacity:0;transform:translateY(14px) scale(.92);
-  animation:pop .7s cubic-bezier(.2,.8,.3,1) forwards;
+/* top-right control group (mute + fullscreen), above the nav so it stays clickable */
+.hero-ctrls{position:absolute;top:20px;right:20px;z-index:60;display:flex;align-items:center;gap:.5rem}
+.hero-ctrl{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:rgba(38,21,92,.55);color:#fff;
+  border:1px solid rgba(255,255,255,.35);border-radius:100px;
+  padding:.5rem;cursor:pointer;
+  font-family:var(--font-head);font-weight:600;font-size:.85rem;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:background .15s ease,transform .15s ease;
 }
-.bubble.v{color:var(--violet);background:var(--violet-wash);border-radius:16px 16px 4px 16px}
-.bubble.win{color:var(--violet-ink);background:var(--lime);border-radius:16px 16px 4px 16px;font-family:var(--font-head)}
-.b1{top:200px;left:20px;animation-delay:.5s}
-.b2{top:255px;right:18px;animation-delay:1.0s}
-.b3{top:320px;left:30px;animation-delay:1.5s}
-.b4{top:380px;right:24px;animation-delay:2.0s}
-.b5{top:445px;left:40px;animation-delay:2.5s}
+.hero-ctrl:hover{background:rgba(38,21,92,.82);transform:translateY(-1px)}
+.hero-ctrl.with-label{padding:.5rem .9rem}
+.hero-ctrl svg{display:block;width:18px;height:18px}
 
-/* floating chips outside the phone */
-.chip{
-  position:absolute;z-index:5;font-family:var(--font-head);font-weight:700;font-size:.95rem;
-  background:#fff;padding:.55rem .95rem;border-radius:100px;
-  box-shadow:var(--shadow-sm);opacity:0;
-  animation:pop .7s cubic-bezier(.2,.8,.3,1) forwards, bob 5s ease-in-out infinite;
-}
-.chip .tag{font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);display:block;margin-bottom:-2px}
-.c1{top:60px;left:0;animation-delay:.8s,.8s}
-.c2{top:120px;right:-6px;color:var(--violet);animation-delay:1.3s,1.3s}
-.c3{bottom:78px;left:-8px;color:var(--lime-deep);animation-delay:1.8s,1.8s}
-.c4{bottom:30px;right:8px;animation-delay:2.3s,2.3s}
-
-@keyframes pop{to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-
-/* ---------- language ticker ---------- */
-.langs{
-  display:flex;justify-content:center;align-items:center;gap:clamp(1rem,4vw,3rem);flex-wrap:wrap;
-  padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  font-family:var(--font-head);font-weight:700;color:var(--slate);font-size:1.05rem;
-}
-.langs .label{font-family:var(--font-body);font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mist)}
-.langs span{opacity:.9}
-
-/* ---------- sections ---------- */
-section{scroll-margin-top:90px}
-.band{padding:88px 0}
-.sec-head{max-width:42ch;margin-bottom:48px}
-.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
-.sec-head .eyebrow{margin-bottom:1.1rem}
-h2{font-size:clamp(2rem,3.8vw,2.8rem);font-weight:800;line-height:1.08}
-h2 + p{color:var(--slate);font-size:1.12rem;margin-top:.9rem;max-width:48ch}
-.sec-head.center h2 + p{margin-left:auto;margin-right:auto}
-
-/* ---------- photo slot (placeholder-aware) ---------- */
-.photo{position:relative;overflow:hidden;border-radius:var(--r);background:var(--violet-wash);width:100%}
-.photo img{border-radius:inherit}
-.photo-ph{
-  position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:10px;
-  padding:18px;text-align:center;border:1.5px dashed var(--violet-light);border-radius:inherit;
-  background:
-    repeating-linear-gradient(45deg, rgba(139,92,255,.05) 0 10px, transparent 10px 20px);
-}
-.photo-ph svg{width:30px;height:30px;color:var(--violet-light)}
-.photo-ph span{font-family:var(--font-head);font-size:.8rem;font-weight:600;color:var(--slate);max-width:26ch;line-height:1.35}
-
-/* warm "thesis" moment — statement + candid photo */
-.thesis-band{padding:76px 0;background:var(--cloud);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.thesis-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
-.thesis{
-  font-family:var(--font-head);font-weight:700;letter-spacing:-.02em;
-  font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.26;color:var(--ink);
-  max-width:20ch;margin:0;
-}
-.thesis b{color:var(--violet);font-weight:700}
-@media(max-width:860px){
-  .thesis-grid{grid-template-columns:1fr;gap:32px}
-  .thesis{max-width:28ch}
+/* seekable progress / length bar — lifted 5px off the bottom so it doesn't sit
+   against the next (same-purple) section; white fill so it stays visible */
+.hero-progress{position:absolute;left:0;right:0;bottom:5px;z-index:4;height:6px;background:rgba(255,255,255,.30);cursor:pointer}
+.hero-progress:hover{height:9px}
+.hero-progress-fill{position:relative;height:100%;width:0;background:#fff;transition:width .1s linear}
+/* round white scrubber handle at the current position */
+.hero-progress-fill::after{
+  content:"";position:absolute;right:0;top:50%;transform:translate(50%,-50%);
+  width:14px;height:14px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 5px rgba(0,0,0,.35);
 }
 
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.step{
-  background:var(--white);border-radius:var(--r);padding:30px 26px 32px;
-  box-shadow:var(--shadow-sm);position:relative;border:1px solid var(--line);
-}
-.step-photo{margin-bottom:20px}
-.step .num{font-family:var(--font-head);font-size:.8rem;font-weight:700;color:var(--violet-light);letter-spacing:.1em;display:block;margin-bottom:10px}
-.step .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--violet-wash);margin-bottom:16px;color:var(--violet)}
-.step h3{font-size:1.22rem;font-weight:700;margin-bottom:.4rem}
-.step p{color:var(--slate);font-size:.98rem}
+/* fullscreen: fill the screen and show the whole frame */
+.hero:fullscreen{aspect-ratio:auto;width:100vw;height:100vh}
+.hero:fullscreen .hero-video{object-fit:contain;background:#000}
 
-/* why grid */
-.why{background:var(--cloud)}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.card{display:flex;gap:16px;background:var(--white);border-radius:var(--r);padding:26px;border:1px solid var(--line)}
-.card .ico{width:46px;height:46px;flex:none;border-radius:13px;display:grid;place-items:center;background:var(--violet-wash);color:var(--violet)}
-.card h3{font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
-.card p{color:var(--slate);font-size:.96rem}
-
-/* ---------- cue system ---------- */
-.cues{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
-.cue{
-  background:var(--white);border:1px solid var(--line);border-radius:var(--r);
-  padding:26px 18px;text-align:center;box-shadow:var(--shadow-sm);
-}
-.cue .emoji{font-size:2.1rem;line-height:1;display:block;margin-bottom:14px}
-.cue .bm{font-family:var(--font-head);font-weight:700;font-size:1.05rem;color:var(--ink)}
-.cue .en{display:block;font-size:.82rem;color:var(--mist);font-weight:600;margin-top:.15rem}
-@media(max-width:760px){.cues{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:380px){.cues{grid-template-columns:1fr}}
-
-/* ---------- testimonial ---------- */
-.testi{background:var(--cloud)}
-.testi-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:52px;align-items:center}
-.testi-photo{max-width:360px}
-.testi-body .eyebrow{margin-bottom:1.2rem}
-.quote{
-  font-family:var(--font-serif);font-style:italic;font-weight:600;
-  font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.32;color:var(--ink);
-  margin:0;max-width:24ch;
-}
-.cite{margin-top:1.3rem;font-size:.95rem;color:var(--slate)}
-.cite b{font-family:var(--font-head);color:var(--ink);font-weight:700}
-@media(max-width:860px){
-  .testi-grid{grid-template-columns:1fr;gap:30px}
-  .testi-photo{max-width:280px}
+@media(max-width:680px){
+  .hero-ctrls{top:14px;right:14px}
+  .hero-ctrl{font-size:.78rem}
+  .hero-ctrl.with-label{padding:.4rem .7rem}
+  .hero-play{width:60px;height:60px}
+  .hero-play svg{width:26px;height:26px}
 }
 
-/* ---------- pilot / form (rich violet band) ---------- */
+/* ---------- section rhythm ---------- */
+/* Every section is one full screen tall, content vertically centred, so all
+   panels are the same size (uniform 16:9 "slides" on a 1366×768 laptop). */
+.band{padding:96px 0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+section{scroll-margin-top:0}
+
+/* These sections match the VIDEO & COMMUNITY sections: 16:9 on every screen
+   (higher specificity so it beats the .band min-height + padding). */
+.band.skill-band,.band.togetherness,.band.stat-band,.band.pilot{
+  aspect-ratio:16/9;
+  min-height:auto;
+  padding-top:clamp(16px,4vw,72px);
+  padding-bottom:clamp(16px,4vw,72px);
+}
+
+/* ---------- skill band (violet statement) ---------- */
+.skill-band{background:var(--grad-cover);color:#fff;text-align:center}
+.skill-a{
+  font-weight:400;
+  font-size:clamp(2rem,4.2vw,3.1rem);color:#fff;
+}
+.skill-b{
+  font-family:var(--font-head);font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.5rem,3.4vw,2.5rem);color:rgba(255,255,255,.94);margin-top:.4rem;
+}
+.accent-serif{font-style:italic;color:var(--lime);font-weight:400}
+
+/* ---------- community full-bleed photo ---------- */
+/* 16:9 like the video, showing the FULL image (it's a 16:9 file, so no crop) */
+.community-photo{position:relative;width:100%;aspect-ratio:16/9}
+.community-img{object-fit:cover;object-position:center}
+
+/* Mobile: sections size to their content instead of a forced full screen
+   (avoids empty gaps & overflow). */
+@media(max-width:767px){
+  .band{min-height:auto}
+  .contact{min-height:auto}
+}
+
+/* ---------- togetherness ---------- */
+.togetherness{background:#ECE3FF;padding:80px 0}
+.tg-brand{
+  font-weight:400;
+  font-size:clamp(1.9rem,3.8vw,2.7rem);color:var(--violet-light);
+}
+.tg-script{font-style:italic;font-weight:400}
+.tg-line{color:var(--mist);font-size:1.05rem;margin-top:.5rem;font-weight:500}
+
+/* ---------- stat band ---------- */
+.stat-band{background:var(--grad-cover);color:#fff;padding:80px 0}
+/* constrain to the shared content width, left-aligned, so it lines up with the
+   DLD text section */
+.stat-inner{max-width:var(--content-w);margin:0 auto;text-align:left}
+.stat-big{
+  font-family:var(--font-head);font-weight:800;letter-spacing:-.03em;line-height:1;
+  font-size:clamp(3.2rem,9vw,6.4rem);color:#fff;
+}
+.stat-body{
+  color:rgba(255,255,255,.9);font-size:clamp(1rem,1.8vw,1.25rem);
+  max-width:44ch;margin-top:1.2rem;font-weight:500;
+}
+.stat-source{color:rgba(255,255,255,.6);font-size:.85rem;margin-top:1rem}
+
+/* ---------- DLD section ---------- */
+.dld{background:#ECE3FF}
+/* no bottom padding, and a negative bottom margin so the figures overlap DOWN
+   onto the next (Pilot) section. -8vw scales with the screen width, plus a
+   fixed extra 2px of depth. */
+.band.dld{aspect-ratio:16/9;min-height:auto;padding-top:clamp(16px,4vw,72px);padding-bottom:0;margin-bottom:calc(-8vw - 2px)}
+/* centre the text in the space above; the image stays flush at the bottom */
+.dld .wrap{margin:auto}
+/* text width matches the pilot content (920px), left-aligned so it starts at the
+   same left position as the stat + pilot sections */
+.dld-body{color:var(--slate);font-size:1.08rem;max-width:var(--content-w);margin:0 auto;font-weight:400;text-align:left}
+.dld-question{
+  font-family:var(--font-head);font-weight:800;letter-spacing:-.02em;
+  font-size:clamp(1.5rem,3.4vw,2.4rem);color:var(--violet);line-height:1.18;
+  max-width:var(--content-w);margin:2rem auto 0;text-align:left;
+}
+.dld-humans{width:100%;margin-top:40px}
+.dld-humans-img{width:100%;height:auto;display:block}
+
+/* ---------- pilot band ---------- */
 .pilot{background:var(--grad-cover);color:#fff}
-.pilot-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:start}
-.pilot-copy .eyebrow{margin-bottom:1.1rem;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
-.pilot-copy .eyebrow .dot{background:var(--lime);box-shadow:0 0 0 4px rgba(174,232,90,.25)}
-.pilot-copy h2{color:#fff}
-.pilot-copy .intro{color:rgba(255,255,255,.86);font-size:1.12rem;margin-top:.9rem;max-width:42ch}
-.pilot-copy ul{list-style:none;margin-top:1.6rem;display:grid;gap:.85rem}
-.pilot-copy li{display:flex;gap:.7rem;color:rgba(255,255,255,.86);font-weight:500}
-.pilot-copy li svg{width:22px;height:22px;flex:none;color:var(--lime)}
-.pilot-copy li b{color:#fff;font-weight:700}
-
-form{background:var(--white);color:var(--ink);border-radius:26px;padding:34px;box-shadow:var(--shadow);border:1px solid var(--line)}
-.field{margin-bottom:18px}
-.field label{display:block;font-family:var(--font-head);font-weight:600;font-size:.9rem;margin-bottom:.45rem}
-.field .opt{font-weight:500;color:var(--slate)}
-input,select,textarea{
-  width:100%;font-family:var(--font-body);font-size:1rem;color:var(--ink);
-  padding:.8rem .95rem;border-radius:13px;border:1.5px solid var(--line);
-  background:#fff;transition:border-color .15s ease, box-shadow .15s ease;
+/* centre the copy + phone as one group, with space on both sides */
+.pilot-grid{display:grid;grid-template-columns:1fr auto;gap:clamp(36px,5vw,72px);align-items:center;max-width:var(--content-w);margin:0 auto}
+.pilot-copy h2{color:#fff;font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800;line-height:1.1}
+.pilot-body{color:rgba(255,255,255,.86);font-size:1.08rem;margin-top:1rem;max-width:42ch}
+.pilot-form{margin-top:1.8rem;max-width:440px}
+.pilot-inputwrap{
+  display:flex;gap:8px;background:var(--white);padding:6px;border-radius:100px;
+  box-shadow:var(--shadow);flex-wrap:nowrap;
 }
-input::placeholder,textarea::placeholder{color:var(--mist)}
-input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 0 0 4px var(--violet-wash);outline:none}
-textarea{resize:vertical;min-height:84px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.consent{display:flex;gap:.65rem;align-items:flex-start;margin:6px 0 20px;font-size:.9rem;color:var(--slate)}
-.consent input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--violet)}
-form .btn{width:100%;justify-content:center;font-size:1.05rem;padding:1rem}
-.formnote{text-align:center;font-size:.82rem;color:var(--slate);margin-top:14px}
+.pilot-inputwrap input{
+  flex:1;min-width:0;border:none;background:transparent;outline:none;
+  font-family:var(--font-body);font-size:1rem;color:var(--ink);padding:.7rem 1rem;
+}
+.pilot-inputwrap input::placeholder{color:var(--mist)}
+.pilot-inputwrap .btn{flex:none}
+.pilot-err{color:#FFE39A;font-size:.85rem;font-weight:600;margin-top:.6rem;padding-left:1rem}
+.pilot-note{color:rgba(255,255,255,.7);font-size:.85rem;margin-top:.9rem;padding-left:1rem}
+.pilot-success{
+  margin-top:1.8rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  border-radius:20px;padding:24px 26px;max-width:440px;
+}
+.ps-title{font-family:var(--font-head);font-weight:800;font-size:1.3rem;color:#fff}
+.ps-body{color:rgba(255,255,255,.86);margin-top:.4rem}
 
-.success{display:none;text-align:center;padding:18px 6px;background:var(--white);border-radius:26px;box-shadow:var(--shadow);border:1px solid var(--line)}
-.success.show{display:block;animation:pop .5s ease forwards}
-.success .tick{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:var(--lime);display:grid;place-items:center;color:var(--violet-ink)}
-.success h3{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
-.success .serif{font-family:var(--font-serif);font-style:italic;color:var(--slate);font-size:1.05rem}
-.err{color:var(--coral);font-size:.82rem;font-weight:600;margin-top:.35rem;display:none}
-.err.show{display:block}
+/* phone mockup */
+.pilot-phone{display:flex;justify-content:center}
+.phone{
+  position:relative;width:256px;height:520px;border-radius:44px;
+  background:#1c1a22;padding:11px;box-shadow:var(--shadow);
+}
+.notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:92px;height:24px;background:#1c1a22;border-radius:0 0 16px 16px;z-index:4}
+.screen{
+  position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;
+  background:#E0D1FF; /* light lavender behind the portrait */
+  display:flex;flex-direction:column;align-items:center;padding-top:120px; /* "hello!" sits just above maya */
+}
+.hello{font-family:var(--font-display);font-weight:700;font-size:2.4rem;letter-spacing:-.01em;color:#8B5CFF;line-height:1}
+.screen-portrait{
+  position:absolute;bottom:0;left:0;right:0;height:74%;
+}
+/* maya is a transparent cutout — anchor her to the bottom edge, head at top,
+   so the lavender screen shows behind her (matching the PDF phone). */
+.screen-img{object-fit:cover;object-position:center top}
 
-/* ---------- footer ---------- */
-footer{padding:48px 0 56px;background:var(--ink);color:rgba(255,255,255,.72)}
-footer .logo{color:#fff}
-.foot-inner{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
-.foot-inner p{color:rgba(255,255,255,.6);font-size:.88rem;margin-left:auto}
-.foot-links{display:flex;gap:1.5rem;font-family:var(--font-head);font-weight:600;font-size:.9rem;color:rgba(255,255,255,.72)}
-.foot-links a:hover{color:#fff}
-@media(max-width:680px){.foot-inner p{margin-left:0;width:100%}}
+/* ---------- contact + footer (one section) ---------- */
+.contact{background:#FFFFFF;aspect-ratio:16/9;min-height:auto;display:flex;flex-direction:column;padding:clamp(40px,6vh,80px) 0}
+.contact-inner{flex:1;display:flex;flex-direction:column;width:100%}
+.contact-title{
+  font-family:var(--font-serif);font-style:italic;
+  text-align:center;color:var(--violet-light);font-weight:400;
+  /* WONK 0 — keep the elegant italic but drop the wonky swash "b" */
+  font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 0;
+  font-size:clamp(1.7rem,3.2vw,2.4rem);margin-bottom:16px;
+}
+/* purple divider under the heading */
+.contact-rule{border:0;height:1px;width:100%;max-width:960px;margin:0 auto 48px;background:rgba(139,92,255,.40)}
+/* tutur logo + legal, pushed to the bottom of the section */
+.contact-foot{margin-top:auto;padding-top:56px;display:flex;flex-direction:column;align-items:center;gap:1.1rem;text-align:center}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:900px;margin:0 auto}
+.contact-col{text-align:center}
+.contact-label{
+  font-family:var(--font-serif);font-weight:500;font-size:1.05rem;
+  color:var(--violet);margin-bottom:.5rem;
+}
+.contact-label.follow{margin-top:1.8rem}
+.contact-value{color:var(--violet-light);font-size:1rem;font-style:normal;line-height:1.6;display:inline-block}
+a.contact-value:hover{color:var(--violet)}
+.contact-value.address span{display:block}
+
+/* socials */
+.socials{display:flex;justify-content:center;gap:.7rem;margin-top:.2rem}
+.social{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:var(--white);border:1px solid var(--line);color:var(--violet);
+  transition:background .15s ease,color .15s ease,transform .15s ease;
+}
+.social:hover{background:var(--violet-bg);color:#fff;transform:translateY(-2px)}
+.socials.footer .social{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.85)}
+.socials.footer .social:hover{background:var(--violet-bg);color:#fff}
+
+/* ---------- footer bits (now live inside .contact) ---------- */
+.foot-logo{height:34px}
+.foot-legal{color:var(--violet-light);font-size:.8rem;max-width:78ch;line-height:1.65}
 
 /* ---------- responsive ---------- */
-@media(max-width:920px){
-  .hero-grid{grid-template-columns:1fr;gap:36px}
-  .stage{order:-1;min-height:480px}
-  .lede{max-width:48ch}
-  .steps{grid-template-columns:1fr}
-  .cards{grid-template-columns:1fr}
-  .pilot-grid{grid-template-columns:1fr;gap:36px}
+@media(max-width:900px){
+  .pilot-grid{grid-template-columns:1fr;gap:44px}
+  .pilot-phone{order:-1}
+  .pilot-form,.pilot-success{max-width:none}
 }
-@media(max-width:520px){
-  .row{grid-template-columns:1fr}
-  form{padding:24px}
-  .band{padding:64px 0}
+@media(max-width:680px){
+  .band{padding:72px 0}
+  .contact-grid{grid-template-columns:1fr;gap:36px}
+  .nav-inner{height:68px}
+}
+@media(max-width:420px){
+  .wrap{padding:0 18px}
+  .pilot-inputwrap{flex-wrap:wrap;border-radius:20px}
+  .pilot-inputwrap .btn{width:100%}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
-  .bubble,.chip{opacity:1;transform:none}
+  html{scroll-behavior:auto}
 }

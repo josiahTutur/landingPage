@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-/* Official lockup: woven symbol on the LEFT of the tutur wordmark.
-   Assets live in /public (trimmed to their content bounds). */
+/* Official tutur lockup (symbol + wordmark), supplied as single-file assets.
+   Purple for light surfaces, white for dark. Lives in /public/images. */
 
 export default function Logo({
-  height = 30,
+  height,
   variant = "color",
   className,
 }: {
@@ -11,26 +11,18 @@ export default function Logo({
   variant?: "color" | "white";
   className?: string;
 }) {
-  const wordmark =
-    variant === "white" ? "/tutur-wordmark-white.png" : "/tutur-wordmark.png";
-  // symbol is ~1.08:1; wordmark text reads best a touch shorter than the symbol
-  const wordHeight = Math.round(height * 0.62);
+  const src =
+    variant === "white"
+      ? "/images/tutur-logo-white.png"
+      : "/images/tutur-logo-purple.png";
+  // If `height` is given, size inline; otherwise let CSS (className) control it
+  // so it can be made responsive.
   return (
-    <span
+    <img
+      src={src}
+      alt="tutur"
       className={className}
-      style={{ display: "inline-flex", alignItems: "center", gap: height * 0.34 }}
-    >
-      <img
-        src="/tutur-symbol.png"
-        alt=""
-        aria-hidden="true"
-        style={{ height, width: "auto", display: "block" }}
-      />
-      <img
-        src={wordmark}
-        alt="tutur"
-        style={{ height: wordHeight, width: "auto", display: "block" }}
-      />
-    </span>
+      style={{ height: height ?? undefined, width: "auto", display: "block" }}
+    />
   );
 }
