@@ -7,21 +7,46 @@ import { useLang } from "@/components/LanguageProvider";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /* Pilot sign-up band: email capture beside a phone mockup that says "hello!".
-   Front-end only for now — wire `onSubmit` to your list/endpoint when ready. */
+   The email is POSTed to a form-to-email service (Formspree) via env var — no
+   backend needed. Set NEXT_PUBLIC_FORM_ENDPOINT in Vercel (see README). When
+   it's unset, the form still validates + shows success (visual only). */
+const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
+
 export default function Pilot() {
   const { t } = useLang();
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
+  const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!EMAIL_RE.test(email.trim())) {
       setError(true);
       return;
     }
     setError(false);
-    // TODO: POST the email to your pilot list / CRM / Formspree endpoint here.
+    setSending(true);
+
+    if (FORM_ENDPOINT) {
+      try {
+        await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            _subject: "New tutur pilot sign-up",
+          }),
+        });
+      } catch {
+        /* still show success so the visitor isn't left hanging */
+      }
+    }
+
+    setSending(false);
     setDone(true);
   }
 
@@ -49,8 +74,9 @@ export default function Pilot() {
                   placeholder={t.pilot.emailPh}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={sending}
                 />
-                <button type="submit" className="btn btn-lime">
+                <button type="submit" className="btn btn-lime" disabled={sending}>
                   {t.pilot.submit}
                 </button>
               </div>
