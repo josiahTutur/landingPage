@@ -114,9 +114,25 @@ export default function Hero() {
     if (!v.muted) v.play().catch(() => {});
   }
   function toggleFullscreen() {
-    const el = heroRef.current;
-    if (!document.fullscreenElement) el?.requestFullscreen?.().catch(() => {});
-    else document.exitFullscreen?.();
+    const doc = document as Document & {
+      webkitFullscreenElement?: Element;
+      webkitExitFullscreen?: () => void;
+    };
+    const el = heroRef.current as
+      | (HTMLElement & { webkitRequestFullscreen?: () => void })
+      | null;
+    const v = videoRef.current as
+      | (HTMLVideoElement & { webkitEnterFullscreen?: () => void })
+      | null;
+    if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+      (doc.exitFullscreen || doc.webkitExitFullscreen)?.call(document);
+    } else if (el?.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if (el?.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (v?.webkitEnterFullscreen) {
+      v.webkitEnterFullscreen(); // iOS Safari: native (letterboxed) video fullscreen
+    }
   }
   function seek(e: React.MouseEvent<HTMLDivElement>) {
     const v = videoRef.current;
@@ -156,12 +172,11 @@ export default function Hero() {
       <div className="hero-ctrls">
         <button
           type="button"
-          className={`hero-ctrl${soundOn ? "" : " with-label"}`}
+          className="hero-ctrl"
           onClick={toggleSound}
           aria-label={soundOn ? t.hero.soundOn : t.hero.soundOff}
         >
           <SoundIcon on={soundOn} />
-          {!soundOn && <span>{t.hero.soundOff}</span>}
         </button>
         <button
           type="button"

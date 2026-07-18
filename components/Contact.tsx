@@ -22,8 +22,6 @@ export default function Contact() {
               <a href={contact.phoneHref} className="contact-value">
                 {contact.phone}
               </a>
-              <p className="contact-label follow">{t.contact.followLabel}</p>
-              <SocialIcons />
             </div>
 
             <div className="contact-col">
@@ -41,11 +39,16 @@ export default function Contact() {
                 ))}
               </address>
             </div>
+
+            <div className="contact-col contact-follow">
+              <p className="contact-label">{t.contact.followLabel}</p>
+              <SocialIcons />
+            </div>
           </div>
         </div>
 
         <div className="contact-foot">
-          <Logo height={34} variant="color" className="foot-logo" />
+          <Logo variant="color" className="foot-logo" />
           <p className="foot-legal">{t.footer.legal}</p>
         </div>
       </div>

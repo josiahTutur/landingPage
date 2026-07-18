@@ -145,9 +145,9 @@ export const contact = {
     "59200 Kuala Lumpur, Malaysia",
   ],
   social: {
-    instagram: "https://instagram.com/tutur.my",
-    facebook: "https://facebook.com/tutur.my",
-    tiktok: "https://tiktok.com/@tutur.my",
+    instagram: "https://www.instagram.com/tutur.my",
+    facebook: "https://www.facebook.com/share/1BkREVHL1r/",
+    tiktok: "https://www.tiktok.com/@tutur_my",
     linkedin: "https://linkedin.com/company/tutur-my",
   },
 };
