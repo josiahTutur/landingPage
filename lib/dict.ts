@@ -64,7 +64,7 @@ export const dict = {
     },
     footer: {
       legal:
-        "TUTUR TECHNOLOGIES PLT (202604000984 (LLP0046213-LGN), perusahaan sosial diinkubasi oleh SeedLab, dengan sokongan PETRONAS dan Tata Consultancy Services (TCS) @2026",
+        "TUTUR TECHNOLOGIES PLT (202604000984 (LLP0046213-LGN)), diperkasakan oleh SEEd.Lab, program inkubasi perusahaan sosial yang dikuasakan oleh PETRONAS dan Tata Consultancy Services (TCS)",
     },
   },
 
@@ -128,7 +128,7 @@ export const dict = {
     },
     footer: {
       legal:
-        "TUTUR TECHNOLOGIES PLT (202604000984 (LLP0046213-LGN), a social enterprise incubated by SeedLab, with the support of PETRONAS and Tata Consultancy Services (TCS) @2026",
+        "TUTUR TECHNOLOGIES PLT (202604000984 (LLP0046213-LGN)), a social enterprise incubated by SeedLab, with the support of PETRONAS and Tata Consultancy Services (TCS) @2026",
     },
   },
 };
@@ -148,7 +148,7 @@ export const contact = {
     instagram: "https://www.instagram.com/tutur.my",
     facebook: "https://www.facebook.com/share/1BkREVHL1r/",
     tiktok: "https://www.tiktok.com/@tutur_my",
-    linkedin: "https://linkedin.com/company/tutur-my",
+    linkedin: "https://www.linkedin.com/company/tutur-technologies-plt/",
   },
 };
 

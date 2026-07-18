@@ -20,14 +20,6 @@ function PlayIcon() {
     </svg>
   );
 }
-function PauseIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <rect x="6" y="5" width="4" height="14" rx="1" />
-      <rect x="14" y="5" width="4" height="14" rx="1" />
-    </svg>
-  );
-}
 function SoundIcon({ on }: { on: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -50,6 +42,13 @@ function FullscreenIcon() {
     </svg>
   );
 }
+function ExitFullscreenIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 8h5V3M21 8h-5V3M3 16h5v5M21 16h-5v5" />
+    </svg>
+  );
+}
 
 export default function Hero() {
   const { t } = useLang();
@@ -60,6 +59,7 @@ export default function Hero() {
   const [soundOn, setSoundOn] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // choose the resolution once we know the viewport size
   useEffect(() => {
@@ -94,6 +94,20 @@ export default function Hero() {
     };
   }, []);
 
+  // reflect fullscreen state so the button can flip to the "exit" icon
+  useEffect(() => {
+    const onFsChange = () => {
+      const d = document as Document & { webkitFullscreenElement?: Element };
+      setIsFullscreen(!!(d.fullscreenElement || d.webkitFullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", onFsChange);
+    document.addEventListener("webkitfullscreenchange", onFsChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFsChange);
+      document.removeEventListener("webkitfullscreenchange", onFsChange);
+    };
+  }, []);
+
   function togglePlay() {
     const v = videoRef.current;
     if (!v) return;
@@ -124,10 +138,19 @@ export default function Hero() {
     const v = videoRef.current as
       | (HTMLVideoElement & { webkitEnterFullscreen?: () => void })
       | null;
+    const orient = screen.orientation as
+      | (ScreenOrientation & { lock?: (o: string) => Promise<void> })
+      | undefined;
+
     if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+      orient?.unlock?.();
       (doc.exitFullscreen || doc.webkitExitFullscreen)?.call(document);
     } else if (el?.requestFullscreen) {
-      el.requestFullscreen().catch(() => {});
+      el.requestFullscreen()
+        // once fullscreen, rotate the device to landscape (Android; ignored on
+        // desktop/iOS where it isn't supported)
+        .then(() => orient?.lock?.("landscape")?.catch(() => {}))
+        .catch(() => {});
     } else if (el?.webkitRequestFullscreen) {
       el.webkitRequestFullscreen();
     } else if (v?.webkitEnterFullscreen) {
@@ -163,9 +186,9 @@ export default function Hero() {
         type="button"
         className={`hero-play${playing ? " playing" : ""}`}
         onClick={togglePlay}
-        aria-label={playing ? "Pause" : "Play"}
+        aria-label="Play"
       >
-        {playing ? <PauseIcon /> : <PlayIcon />}
+        <PlayIcon />
       </button>
 
       {/* top-right: mute + fullscreen */}
@@ -184,7 +207,7 @@ export default function Hero() {
           onClick={toggleFullscreen}
           aria-label={t.hero.fullscreen}
         >
-          <FullscreenIcon />
+          {isFullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
         </button>
       </div>
 

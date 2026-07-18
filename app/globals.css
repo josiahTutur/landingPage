@@ -68,6 +68,10 @@ body{
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  /* stop mobile browsers from auto-inflating text — a common cause of overflow
+     that only shows on real phones, never in desktop DevTools */
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%}
@@ -168,8 +172,9 @@ h1,h2,h3{font-family:var(--font-head);letter-spacing:-.02em}
 .hero-play:hover{background:rgba(38,21,92,.72)}
 .hero-play:active{transform:translate(-50%,-50%) scale(.94)}
 .hero-play svg{width:34px;height:34px}
+/* while playing, hide the button entirely — click the video itself to pause,
+   which brings the play button back */
 .hero-play.playing{opacity:0;pointer-events:none}
-.hero:hover .hero-play.playing{opacity:1;pointer-events:auto}
 
 /* top-right control group (mute + fullscreen), above the nav so it stays clickable */
 .hero-ctrls{position:absolute;top:20px;right:20px;z-index:60;display:flex;align-items:center;gap:.5rem}
@@ -307,6 +312,9 @@ section{scroll-margin-top:0}
 /* copy pinned to the left edge, phone pinned to the right edge (both at the 30px
    gutter), with ALL the slack as space between them */
 .pilot-grid{display:grid;grid-template-columns:auto auto;justify-content:space-between;align-items:center;gap:clamp(36px,5vw,72px)}
+/* min-width:0 lets this grid item shrink to the column instead of a wide child
+   (the flex button) blowing the column past the viewport on real phones */
+.pilot-copy{min-width:0}
 .pilot-copy h2{font-family:var(--font-serif);color:#fff;font-size:clamp(28px,4.43vw,55px);font-weight:600;line-height:1.1;font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 1}
 .pilot-body{color:rgba(255,255,255,.86);font-size:clamp(16px,2.21vw,23px);margin-top:1rem;max-width:42ch}
 .pilot-form{margin-top:1.8rem;max-width:440px}
@@ -419,9 +427,13 @@ a.contact-value:hover{color:var(--violet)}
   .pilot-grid{grid-template-columns:1fr;gap:44px}
   /* single column: let the body paragraph use the full width */
   .pilot-body{max-width:none}
-  /* keep the sign-up field at the copy width (≤ the "Kami sedang bina" heading),
-     not full-bleed to the edge */
-  .pilot-form,.pilot-success{max-width:42ch}
+  /* fill the column (never wider) — no `ch` unit, which renders differently on
+     real phones vs DevTools */
+  .pilot-form,.pilot-success{max-width:100%}
+}
+/* tablet only: cap the field so it doesn't stretch full-bleed (mobile fills) */
+@media(min-width:768px) and (max-width:900px){
+  .pilot-form,.pilot-success{max-width:440px}
 }
 @media(max-width:680px){
   .band{padding:72px 0}
