@@ -4,7 +4,7 @@ import Logo from "@/components/Logo";
 export default function Nav() {
   return (
     <nav className="nav" aria-label="Primary">
-      <div className="wrap nav-inner">
+      <div className="nav-inner">
         <a href="#top" className="logo" aria-label="tutur — home">
           <Logo variant="white" className="nav-logo" />
         </a>
